@@ -28,6 +28,14 @@
   color: #61dafb;
 }
 
+#background {
+  /* background: url('https://i.stack.imgur.com/GySvQ.png'); */
+  background:
+    conic-gradient(from 90deg at 1.5px 1.5px,#0000 90deg,rgba(81, 81, 81, 0.215) 0) 
+    0 0/50px 50px;
+}
+
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
