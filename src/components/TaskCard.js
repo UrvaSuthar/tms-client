@@ -4,7 +4,7 @@ import { ENDPOINT, createAPIEndPoint } from "../api";
 import { useTaskContext } from "../hooks/TaskContext";
 
 
-function TaskCard({ id, title, taskDescription, isActive }) {
+function TaskCard({ id, title, taskDescription, isActive, index }) {
   const [isEditable, setIsEditable] = useState(false);
   const [editedTitle, setEditedTitle] = useState(title);
   const [editedDescription, setEditedDescription] = useState(taskDescription);
@@ -65,7 +65,7 @@ function TaskCard({ id, title, taskDescription, isActive }) {
       <span className="absolute h-full rounded-md inset-0 border-2 border-dashed border-gray-700"></span>
       <span className="block h-48  border-2 font-mono rounded-md border-solid border-gray-700 bg-white p-4 transition-all group-hover:-translate-x-1 group-hover:-translate-y-1 ">
         <div className="flex items-center justify-between ">
-          <h2 className="text-xl font-bold">#Task {id}</h2>
+          <h2 className="text-xl font-bold">#Task {index}</h2>
           {!isEditable && (
             <button onClick={handleEditClick}>
               <PencilIcon size={10} className="h-5" />

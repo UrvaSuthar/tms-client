@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../App.css";
 import SubmitButton from "./SubmitButton";
-import { createAPIEndPoint, ENDPOINT } from "../api";
+import axios from "axios"
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -21,11 +21,18 @@ const Login = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await createAPIEndPoint(ENDPOINT.login).post({
+      const response = await axios.post("http://localhost:5100/api/Account/login",{
         userName: username,
         password: password,
       });
-      if(response.status==200)
+      console.log("login method test");
+      const token = response.data.token;
+      if(localStorage.getItem('token')!= null)
+      {
+        localStorage.removeItem('token')
+      }
+      localStorage.setItem("token", token);
+      if(response.status===200)
       await localStorage.setItem('username', username);
       navigate("/home");
     } catch (error) {

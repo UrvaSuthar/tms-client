@@ -1,19 +1,21 @@
 import React, { useState, useEffect } from "react";
 import Header from "./Header";
 import TaskCard from "./TaskCard";
-import { BASE_URL, createAPIEndPoint, ENDPOINT } from "../api";
-import axios from "axios";
+import {  createAPIEndPoint, ENDPOINT } from "../api";
+import { useTaskContext } from "../hooks/TaskContext";
 
 function Task() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [taskName, setTaskName] = useState("");
   const [taskDescription, setTaskDescription] = useState("");
   const [tasks, setTasks] = useState([]);
+  const {updateTasks}= useTaskContext();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await createAPIEndPoint(ENDPOINT.tasks).fetch();
+        // console.log(response.data);
         setTasks(response.data);
       } catch (error) {
         console.error("Error fetching tasks:", error);
@@ -37,10 +39,12 @@ function Task() {
     };
 
     try {
-      // const response = await axios.post("http://localhost:5100/api/Tasks/",requestBody);
       const response = await(createAPIEndPoint(ENDPOINT.tasks)).post(requestBody)
       console.log(response);
       setTasks([...tasks, response.data]);
+      localStorage.removeItem("isUpdated");
+      localStorage.setItem("isUpdated", "true");
+      updateTasks();
     } catch (error) {
       console.error(error);
     }
@@ -117,9 +121,10 @@ function Task() {
             </div>
           )}
 
-          {tasks.map((task) => (
+          {tasks.map((task, index) => (
             <TaskCard
-              key={task.id}
+              key={index}
+              index={index+1}
               id={task.id}
               title={task.title}
               taskDescription={task.description}

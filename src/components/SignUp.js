@@ -29,6 +29,8 @@ const SignUp = () => {
         email,
         password,
       });
+      const token = response.data.token;
+      localStorage.setItem("token", token);
       if (response.status == 200) {
         if (localStorage.getItem("username") != null) {
           localStorage.removeItem("username");
@@ -75,15 +77,15 @@ const SignUp = () => {
           <div className="mb-4">
             <label
               className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="username"
+              htmlFor="email"
             >
               E-mail
             </label>
             <input
               className="w-full p-3 border border-gray-600 rounded-md focus:outline-none focus:border-blue-500"
               type="text"
-              id="username"
-              name="username"
+              id="email"
+              name="email"
               placeholder="Enter your email"
               value={email}
               onChange={handleEmailChange}

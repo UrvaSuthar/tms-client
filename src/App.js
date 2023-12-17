@@ -8,6 +8,7 @@ import Dashboard from "./components/Dashboard";
 import Authenticate from "./components/Authenticate";
 
 function App() {
+  // localStorage.setItem("isUpdated",false);
   return (
     <BrowserRouter>
       <Routes>

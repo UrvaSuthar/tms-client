@@ -13,13 +13,17 @@ export const TaskProvider = ({ children }) => {
       setTasks(response.data);
     } catch (error) {
       console.error("Error fetching tasks:", error);
-      // Handle error (display error message, etc.)
     }
   };
+  // useEffect(()=>{
+  //   if(localStorage.getItem('isUpdated') == "true"){
+  //     updateTasks();
+  //     localStorage.setItem('isUpdated',"false");
+  //   }
+  // })
   useEffect(() => {
-	// Initial fetch of tasks when the component mounts
 	updateTasks();
-      }, []);
+      });
 
   return (
     <TaskContext.Provider value={{ tasks, updateTasks }}>

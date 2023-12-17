@@ -1,19 +1,26 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { createAPIEndPoint, ENDPOINT } from "../api";
 import { useTaskContext } from "../hooks/TaskContext";
 
-
 const Dashboard = () => {
-
   const { tasks, updateTasks } = useTaskContext(); // Use the context
 
+  useEffect(() => {
+    const isUpdated = localStorage.getItem("isUpdated");
+    if (isUpdated === "true") {
+      updateTasks();
+      localStorage.setItem("isUpdated", "false");
+    }
+  });
+
+  
   return (
     <div className="flex h-screen flex-col font-mono bg-dotted-spacing-8 bg-dotted-gray-300 justify-start items-start">
       <div className="flex h-20 justify-between items-center w-full">
         <p className="ml-4 text-gray-700 text-4xl ">Tasks Dashboard</p>
-        <button className="mr-5 items-center p-2 text-white rounded bg-gray-700" onClick={updateTasks}>
+        {/* <button className="mr-5 items-center p-2 text-white rounded bg-gray-700" onClick={updateTasks}>
           Refetch Tasks
-        </button>
+        </button> */}
       </div>
       <div className="w-full flex justify-center items-center">
         {/* <div className="overflow-x-auto w-full"> */}
