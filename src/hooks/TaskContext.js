@@ -5,16 +5,26 @@ const TaskContext = createContext();
 
 export const TaskProvider = ({ children }) => {
   const [tasks, setTasks] = useState([]);
+  const [users, setUsers] = useState([]); // New state for users
+  const [isAdmin, setIsAdmin] = useState(false); // Add state to track admin status
+
 
   const updateTasks = async () => {
     // Fetch tasks from the API and update the context
     try {
-      const response = await createAPIEndPoint(ENDPOINT.tasks).fetch();
+      const response = await createAPIEndPoint(ENDPOINT.tasks).fetchAll();
+      const usersResponse = await createAPIEndPoint().getUsers();
+
+      const currentUser = JSON.parse(localStorage.getItem("user"));
+      
+      setIsAdmin(currentUser.userName.toLowerCase() === "admin");
+      setUsers(usersResponse.data);
       setTasks(response.data);
     } catch (error) {
-      console.error("Error fetching tasks:", error);
+      console.error("Error fetching data:", error);
     }
   };
+  
   // useEffect(()=>{
   //   if(localStorage.getItem('isUpdated') == "true"){
   //     updateTasks();
@@ -26,7 +36,7 @@ export const TaskProvider = ({ children }) => {
       });
 
   return (
-    <TaskContext.Provider value={{ tasks, updateTasks }}>
+    <TaskContext.Provider value={{ tasks, isAdmin, users, updateTasks }}>
       {children}
     </TaskContext.Provider>
   );

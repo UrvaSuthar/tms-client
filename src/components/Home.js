@@ -63,9 +63,9 @@ function Home() {
   
 
   return (
-    <div className="flex font-mono">
+    <div className="flex font-mono dark:text-gray-200">
       <Header />
-      <div className="flex-grow bg-dotted-spacing-9 bg-dotted-gray-400">
+      <div className="flex-grow bg-dotted-spacing-9 bg-dotted-gray-400 dark:bg-dotted-gray-600 dark:bg-dark">
         <div className="flex justify-start items-end h-screen p-2">
           <div className="flex-col space-y-2 mb-4 ml-4">
             <h1 className="text-2xl font-medium">{greeting} {localStorage.getItem('username')}</h1>

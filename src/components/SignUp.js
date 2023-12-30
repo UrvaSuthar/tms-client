@@ -30,7 +30,9 @@ const SignUp = () => {
         password,
       });
       const token = response.data.token;
-      localStorage.setItem("token", token);
+      if (localStorage.getItem("token") != null) {
+        localStorage.removeItem("token");
+      }
       if (response.status == 200) {
         if (localStorage.getItem("username") != null) {
           localStorage.removeItem("username");
@@ -48,10 +50,11 @@ const SignUp = () => {
       className="min-h-screen font-mono flex items-center justify-center"
       id="background"
     >
-      <div className="max-w-md w-full m-4 p-6 bg-white rounded-lg border border-r-4 border-b-4 border-gray-700 shadow-md">
-        <div className="bg-gray-300 p-0.5 rounded-lg border border-r-4 border-b-4 border-gray-700  mb-6 flex justify-center items-center">
-          <div className="border-2 border-white p-3 flex-1 border-r-0 border-b-0 rounded-md">
-            <h2 className="text-3xl font-semibold text-center text-gray-800">
+      
+      <div className="max-w-md w-full m-4 p-6 bg-white dark:bg-gray-700 rounded-lg border border-r-4 border-b-4 border-gray-700 dark:border-gray-900 shadow-md">
+        <div className="bg-gray-300 dark:bg-gray-500 p-0.5 rounded-lg border border-r-4 border-b-4 border-gray-700 dark:border-gray-800 mb-6 flex justify-center items-center">
+          <div className="border-2 border-white dark:border-gray-300 p-3 flex-1 border-r-0 border-b-0 rounded-md">
+            <h2 className="text-3xl font-semibold dark:font-medium text-center dark:text-gray-200 text-gray-800">
               Create New Account
             </h2>
           </div>
@@ -59,13 +62,13 @@ const SignUp = () => {
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label
-              className="block text-gray-700 text-sm font-bold mb-2"
+              className="block text-gray-700 dark:text-gray-200 text-sm font-bold mb-2"
               htmlFor="username"
             >
               Username
             </label>
             <input
-              className="w-full p-3 border border-gray-600 rounded-md focus:outline-none focus:border-blue-500"
+              className="w-full p-3 border border-gray-600 dark:border-gray-700 dark:bg-gray-400 dark:placeholder:text-gray-700 dark:text-gray-700 rounded-md focus:outline-none focus:border-blue-500 dark:focus:border-gray-300"
               type="text"
               id="username"
               name="username"
@@ -76,13 +79,13 @@ const SignUp = () => {
           </div>
           <div className="mb-4">
             <label
-              className="block text-gray-700 text-sm font-bold mb-2"
+              className="block text-gray-700 dark:text-gray-200 text-sm font-bold mb-2"
               htmlFor="email"
             >
               E-mail
             </label>
             <input
-              className="w-full p-3 border border-gray-600 rounded-md focus:outline-none focus:border-blue-500"
+              className="w-full p-3 border border-gray-600 dark:border-gray-700 dark:bg-gray-400 dark:placeholder:text-gray-700 dark:text-gray-700 rounded-md focus:outline-none focus:border-blue-500 dark:focus:border-gray-300"
               type="text"
               id="email"
               name="email"
@@ -94,13 +97,13 @@ const SignUp = () => {
 
           <div className="mb-6">
             <label
-              className="block text-gray-700 text-sm font-bold mb-2"
+              className="block text-gray-700 dark:text-gray-200 text-sm font-bold mb-2"
               htmlFor="password"
             >
               Password
             </label>
             <input
-              className="w-full p-3 border border-gray-600 rounded-md focus:outline-none focus:border-blue-500"
+              className="w-full p-3 border border-gray-600 dark:border-gray-700 dark:bg-gray-400 dark:placeholder:text-gray-700 dark:text-gray-700 rounded-md focus:outline-none focus:border-blue-500 dark:focus:border-gray-300"
               type="password"
               id="password"
               name="password"

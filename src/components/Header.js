@@ -19,23 +19,23 @@ function Header() {
   };
 
   return (
-    <div className="flex h-screen w-16 flex-col justify-between border-e border-black font-mono bg-white">
+    <div className="flex h-screen w-16 flex-col justify-between border-e border-black dark:border-gray-400 font-mono bg-white dark:bg-dark dark:text-grey-300">
       <div>
         <div className="inline-flex h-16 w-16 items-center justify-center">
           <span
             onClick={handleHome}
-            className="grid h-12 w-12 place-content-center rounded-lg bg-gray-100 text-xs font-semibold text-gray-600 border-2 border-gray-600"
+            className="grid h-12 w-12 place-content-center rounded-lg bg-gray-100 dark:bg-grey-700 dark:text-grey-300 text-xs font-semibold text-gray-600 border-2 border-gray-600"
           >
             Tasky
           </span>
         </div>
 
-        <div className="border-t border-black">
+        <div className="border-t border-black dark:border-gray-400">
           <div className="px-2">
             <div className="py-4">
-              <a
+              <button
                 onClick={handleTask}
-                className="t group relative flex justify-center rounded bg-blue-50 px-2 py-1.5 text-blue-700 border border-blue-700/30"
+                className="t group relative flex justify-center rounded bg-blue-50 dark:bg-blue-600/40 px-2 py-1.5 text-blue-700 dark:text-blue-400 dark:border-blue-300/30 border border-blue-700/30"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -54,7 +54,7 @@ function Header() {
                 <span className="absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white opacity-0 group-hover:opacity-100" style={{ zIndex: 1 }}>
                   Tasks
                 </span>
-              </a>
+              </button>
             </div>
 
 
@@ -62,11 +62,11 @@ function Header() {
         </div>
       </div>
 
-      <div className="sticky inset-x-0 bottom-0 border-t border-black bg-white p-2">
+      <div className="sticky inset-x-0 bottom-0 border-t border-black bg-white dark:bg-dark dark:border-gray-400 p-2">
         <form onSubmit={handleLogout}>
           <button
             type="submit"
-            className="group relative flex w-full justify-center rounded-lg px-2 py-1.5 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
+            className="group relative flex w-full justify-center rounded-lg px-2 py-1.5 text-sm text-gray-500 hover:text-gray-700 dark:text-gray-300 "
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"

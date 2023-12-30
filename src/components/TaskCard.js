@@ -10,11 +10,13 @@ function TaskCard({ id, title, taskDescription, isActive, index }) {
   const [editedDescription, setEditedDescription] = useState(taskDescription);
   const [editedIsActive, setEditedIsActive] = useState(isActive);
 
-  const { tasks, updateTasks } = useTaskContext(); // Use the context
+  const { updateTasks } = useTaskContext(); // Use the context
 
   const handleEditClick = () => {
     setIsEditable(true);
   };
+
+
 
   const handleSaveChanges = () => {
     // Send PUT request to update the task
@@ -42,14 +44,20 @@ function TaskCard({ id, title, taskDescription, isActive, index }) {
       console.error("Error deleting task:", error);
     }
   };
+  const user = JSON.parse(localStorage.getItem("user"));
+  // console.log(user);
   const sendPutRequest = async (id, title, description, isActive) => {
+    const dataToPost= {
+      id:id,
+      title : title,
+      description:description,
+      isActive:isActive,
+      createdAt: new Date(),
+      userId: user.id
+    }
+    console.log(dataToPost);
     try {
-      const response = await createAPIEndPoint(ENDPOINT.tasks).put(id, {
-        title,
-        description,
-        isActive,
-        createdAt: new Date()
-      });
+      const response = await createAPIEndPoint(ENDPOINT.tasks).put(id, dataToPost);
 
       if (response.status === 200) {
         console.log("Task updated successfully");
@@ -61,9 +69,9 @@ function TaskCard({ id, title, taskDescription, isActive, index }) {
   };
 
   return (
-    <div className="group max-h-48 relative rounded-md inline-block text-sm font-medium text-gray-800 focus:outline-none focus:ring ring-gray-200 active:text-gray-500">
-      <span className="absolute h-full rounded-md inset-0 border-2 border-dashed border-gray-700"></span>
-      <span className="block h-48  border-2 font-mono rounded-md border-solid border-gray-700 bg-white p-4 transition-all group-hover:-translate-x-1 group-hover:-translate-y-1 ">
+    <div className="group max-h-48 relative rounded-md inline-block text-sm font-medium text-gray-800 dark:text-gray-200 focus:outline-none focus:ring ring-gray-200 active:text-gray-500">
+      <span className="absolute h-full rounded-md inset-0 border-2 border-dashed border-gray-700 dark:border-gray-900"></span>
+      <span className="block h-48  border-2 font-mono rounded-md border-solid border-gray-700 dark:border-gray-900 dark:bg-gray-600 bg-white p-4 transition-all group-hover:-translate-x-1 group-hover:-translate-y-1 ">
         <div className="flex items-center justify-between ">
           <h2 className="text-xl font-bold">#Task {index}</h2>
           {!isEditable && (
@@ -86,7 +94,7 @@ function TaskCard({ id, title, taskDescription, isActive, index }) {
             </div>
             {editedIsActive ? (
               <div className="flex items-center space-x-2">
-                <div className="animate-ping rounded-full bg-gray-900 opacity-75 w-1 h-1"></div>
+                <div className="animate-ping rounded-full bg-gray-900 dark:bg-white opacity-75 w-1 h-1"></div>
                 <div>Active</div>
               </div>
             ) : (
@@ -104,12 +112,12 @@ function TaskCard({ id, title, taskDescription, isActive, index }) {
               type="text"
               value={editedTitle}
               onChange={(e) => setEditedTitle(e.target.value)}
-              className="border-b-2  w-full border-gray-800 mb-2 focus:outline-none"
+              className="border-b-2  w-full border-gray-800 dark:border-gray-900 dark:bg-gray-600 dark:placeholder:text-gray-700 dark:text-gray-200 mb-2 focus:outline-none"
             />
             <textarea
               value={editedDescription}
               onChange={(e) => setEditedDescription(e.target.value)}
-              className="border-b-2 w-full border-gray-700 focus:outline-none "
+              className="border-b-2 w-full border-gray-700 dark:border-gray-900 dark:bg-gray-600 dark:placeholder:text-gray-700 dark:text-gray-200 focus:outline-none "
             ></textarea>
             <div className="flex items-center mt-1">
               <input
@@ -126,13 +134,13 @@ function TaskCard({ id, title, taskDescription, isActive, index }) {
           <div className="mt-1">
             <button
               onClick={handleSaveChanges}
-              className="bg-gray-700 hover:bg-gray-600 text-white font-medium py-1.5 px-2.5 rounded-md mr-2"
+              className="bg-gray-700 dark:bg-gray-800 hover:bg-gray-600 text-white font-medium py-1.5 px-2.5 rounded-md mr-2"
             >
               Save Changes
             </button>
             <button
               onClick={handleCancel}
-              className="bg-white text-gray-700 font-medium py-2 px-4 rounded-md"
+              className=" text-gray-700 dark:text-white font-medium py-2 px-4 rounded-md"
             >
               Cancel
             </button>
