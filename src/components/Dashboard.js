@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { ENDPOINT, createAPIEndPoint } from "../api";
 import { PencilIcon, TrashIcon } from "@heroicons/react/outline";
 
-
 const Dashboard = () => {
   const { tasks, isAdmin, updateTasks } = useTaskContext();
   const navigate = useNavigate();
@@ -64,7 +63,6 @@ const Dashboard = () => {
   };
 
   const handleUpdateTask = async (taskId) => {
-    // Implement update task logic here
     setIsEditing(true);
     setSelectedTask(taskId);
     setEditedTask(tasks.find((task) => task.id == taskId));
@@ -104,7 +102,9 @@ const Dashboard = () => {
         .catch((err) => console.log(err + " handling put"));
       if (response.status === 204) {
         console.log("Task user updated successfully");
-        // Update the task data in the tasks array
+        
+        
+        // Updating the task data in the tasks array
         const updatedTasks = tasks.map((task) => {
           if (task.id === taskId) {
             return { ...task, ...updatedTaskData };
@@ -166,18 +166,18 @@ const Dashboard = () => {
               <tr key={task.id} className="text-center mx-3 group ">
                 <td className="w-1/10 max-w-10">
                   <div className="w-full">
-                  <button
-                    className="mr-2 items-center p-2 text-red-600 opacity-0 group-hover:opacity-100 text-xl"
-                    onClick={() => handleDeleteTask(task.id)}
-                  >
-                    <TrashIcon size={10} className="h-5"/>
-                  </button>
-                  <button
-                    className="mr-2 items-center p-2 text-black opacity-0 group-hover:opacity-100  text-xl"
-                    onClick={() => handleUpdateTask(task.id)}
-                  >
-                    <PencilIcon size={10} className="h-5"/>
-                  </button>
+                    <button
+                      className="mr-2 items-center p-2 text-red-600 opacity-0 group-hover:opacity-100 text-xl"
+                      onClick={() => handleDeleteTask(task.id)}
+                    >
+                      <TrashIcon size={10} className="h-5" />
+                    </button>
+                    <button
+                      className="mr-2 items-center p-2 text-black opacity-0 group-hover:opacity-100  text-xl"
+                      onClick={() => handleUpdateTask(task.id)}
+                    >
+                      <PencilIcon size={10} className="h-5" />
+                    </button>
                   </div>
                 </td>
                 <td>
@@ -205,7 +205,6 @@ const Dashboard = () => {
                     })}
                   </p>
                 </td>
-                
               </tr>
             ))}
           </tbody>
@@ -226,7 +225,8 @@ const Dashboard = () => {
               }
             />
             <textarea
-              className="border-b-2 w-full border-gray-700 dark:border-gray-900 dark:bg-gray-600 dark:placeholder:text-gray-700 dark:text-gray-200 focus:outline-none "              placeholder="Description"
+              className="border-b-2 w-full border-gray-700 dark:border-gray-900 dark:bg-gray-600 dark:placeholder:text-gray-700 dark:text-gray-200 focus:outline-none "
+              placeholder="Description"
               value={editedTask.description}
               onChange={(e) =>
                 setEditedTask({ ...editedTask, description: e.target.value })
@@ -260,13 +260,14 @@ const Dashboard = () => {
 
             <div className="flex justify-end">
               <button
-              className="bg-gray-700 dark:bg-gray-800 hover:bg-gray-600 text-white font-medium py-1.5 px-2.5 rounded-md mr-2"                onClick={() => handleModalSave(editedTask.id)}
+                className="bg-gray-700 dark:bg-gray-800 hover:bg-gray-600 text-white font-medium py-1.5 px-2.5 rounded-md mr-2"
+                onClick={() => handleModalSave(editedTask.id)}
               >
                 Save
               </button>
               <button
-              className=" text-gray-700 dark:text-white font-medium py-2 px-4 rounded-md"
-              onClick={handleModalClose}
+                className=" text-gray-700 dark:text-white font-medium py-2 px-4 rounded-md"
+                onClick={handleModalClose}
               >
                 Cancel
               </button>
