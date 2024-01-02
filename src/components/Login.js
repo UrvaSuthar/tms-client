@@ -5,8 +5,11 @@ import "../App.css";
 import SubmitButton from "./SubmitButton";
 import { useEffect } from "react";
 import { createAPIEndPoint } from "../api";
+import HeroCard from "./HeroCard";
 
 
+
+// const heroImg = null;
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -45,8 +48,6 @@ const Login = () => {
       const user = response.data.user;
       console.log(user);
 
-      
-
       if (localStorage.getItem("token") != null) {
         localStorage.removeItem("token");
       }
@@ -55,8 +56,6 @@ const Login = () => {
       }
       localStorage.setItem("user", user);
       localStorage.setItem("token", token);
-
-
 
       if (response.status === 200) {
         await localStorage.setItem("username", username);
@@ -75,9 +74,10 @@ const Login = () => {
 
   return (
     <div
-      className="min-h-screen font-mono flex items-center justify-center"
+      className="min-h-screen font-mono flex items-center justify-evenly"
       id="background"
     >
+      {/* login form */}
       <div className="max-w-md w-full m-4 p-6 dark:bg-grey-700 bg-white rounded-lg border border-r-4 border-b-4 dark:border-gray-900 border-gray-700 shadow-md">
         <div className="bg-gray-300 dark:bg-gray-500 p-0.5 rounded-lg border border-r-4 border-b-4 dark:border-gray-800 border-gray-700 mb-6 flex justify-center items-center">
           <div className="border-2 border-white dark:border-gray-300 p-3 flex-1 border-r-0 border-b-0 rounded-md">
@@ -121,13 +121,15 @@ const Login = () => {
               onChange={handlePasswordChange}
             />
           </div>
+
+
           <div className="flex justify-between items-center mb-6">
             <SubmitButton name="Login" />
             <div className="text-blue-500 hover:underline">
               Forgot Password?
             </div>
           </div>
-        </form>
+        </form> 
         <div className="flex justify-center items-center">
           Don't have account?{" "}
           <div
@@ -140,6 +142,14 @@ const Login = () => {
           </div>
         </div>
       </div>
+
+      {/* hero text */}
+
+      <HeroCard
+      title = {"Welcome to, Tasky"}
+      subtitle = {"Manage your tasks easily"}
+      buttons={false}
+      />
     </div>
   );
 };

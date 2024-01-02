@@ -1,11 +1,15 @@
 import React from 'react'
 import { Navigate, Outlet } from "react-router-dom";
+import {useAuth0} from "@auth0/auth0-react"
 
 function Authenticate() {
-	let isAuthenticated = true;
-	if (localStorage.getItem("username") !== null) {
-	  isAuthenticated = false;
-	}
+
+	const {isAuthenticated} = useAuth0()
+	console.log(isAuthenticated);
+	// let isAuthenticated = true;
+	// if (localStorage.getItem("username") !== null) {
+	//   isAuthenticated = false;
+	// }
   return isAuthenticated ?<Navigate to="/" /> : <Outlet />;
 }
 

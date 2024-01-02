@@ -123,7 +123,7 @@ const SignUp = () => {
           Already have account?{" "}
           <div
             onClick={() => {
-              navigate("/");
+              navigate("/login");
             }}
             className="ml-2 text-blue-500 hover:underline"
           >
