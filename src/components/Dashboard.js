@@ -5,11 +5,13 @@ import { ENDPOINT, createAPIEndPoint } from "../api";
 import { PencilIcon, TrashIcon } from "@heroicons/react/outline";
 
 const Dashboard = () => {
-  const { tasks, isAdmin, updateTasks } = useTaskContext();
+  const { tasks,updateTasks } = useTaskContext();
+
   const navigate = useNavigate();
-  // const isAdmin = localStorage.getItem("username") === "Admin";
+  const isAdmin = localStorage.getItem("username") === "Admin";
 
   const [users, setUsers] = useState([]);
+  // const [tasks, setTasks] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
   const [selectedUser, setSelectedUser] = useState("");
   const [selectedTask, setSelectedTask] = useState(null);
@@ -19,12 +21,14 @@ const Dashboard = () => {
     const fetchUsers = async () => {
       try {
         const response = await createAPIEndPoint().getUsers();
+       
         setUsers(response.data);
       } catch (error) {
         console.error("Error fetching users:", error);
       }
     };
     fetchUsers();
+    // console.log(editedTask);
   }, []);
 
   const getUserById = (userId) => {
@@ -65,7 +69,7 @@ const Dashboard = () => {
   const handleUpdateTask = async (taskId) => {
     setIsEditing(true);
     setSelectedTask(taskId);
-    setEditedTask(tasks.find((task) => task.id == taskId));
+    setEditedTask(tasks.find((task) => task.externalId == taskId));
 
     console.log("Updating task with ID:", taskId);
   };
@@ -84,7 +88,7 @@ const Dashboard = () => {
 
   const updateTaskUser = async (taskId, userId, updatedTaskData) => {
     const dataToPost = {
-      id: taskId,
+      externalId: updatedTaskData.externalId,
       title: updatedTaskData.title,
       description: updatedTaskData.description,
       isActive: updatedTaskData.isActive,
@@ -163,18 +167,18 @@ const Dashboard = () => {
           </thead>
           <tbody>
             {tasks.map((task) => (
-              <tr key={task.id} className="text-center mx-3 group ">
+              <tr key={task.externalId} className="text-center mx-3 group ">
                 <td className="w-1/10 max-w-10">
                   <div className="w-full">
                     <button
                       className="mr-2 items-center p-2 text-red-600 opacity-0 group-hover:opacity-100 text-xl"
-                      onClick={() => handleDeleteTask(task.id)}
+                      onClick={() => handleDeleteTask(task.externalId)}
                     >
                       <TrashIcon size={10} className="h-5" />
                     </button>
                     <button
                       className="mr-2 items-center p-2 text-black opacity-0 group-hover:opacity-100  text-xl"
-                      onClick={() => handleUpdateTask(task.id)}
+                      onClick={() => handleUpdateTask(task.externalId)}
                     >
                       <PencilIcon size={10} className="h-5" />
                     </button>
@@ -261,7 +265,7 @@ const Dashboard = () => {
             <div className="flex justify-end">
               <button
                 className="bg-gray-700 dark:bg-gray-800 hover:bg-gray-600 text-white font-medium py-1.5 px-2.5 rounded-md mr-2"
-                onClick={() => handleModalSave(editedTask.id)}
+                onClick={() => handleModalSave(editedTask.externalId)}
               >
                 Save
               </button>

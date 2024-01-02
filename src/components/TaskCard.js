@@ -4,7 +4,7 @@ import { ENDPOINT, createAPIEndPoint } from "../api";
 import { useTaskContext } from "../hooks/TaskContext";
 
 
-function TaskCard({ id, title, taskDescription, isActive, index }) {
+function TaskCard({ id, title, taskDescription, isActive, index, ExternalId }) {
   const [isEditable, setIsEditable] = useState(false);
   const [editedTitle, setEditedTitle] = useState(title);
   const [editedDescription, setEditedDescription] = useState(taskDescription);
@@ -20,7 +20,7 @@ function TaskCard({ id, title, taskDescription, isActive, index }) {
 
   const handleSaveChanges = () => {
     // Send PUT request to update the task
-    sendPutRequest(id, editedTitle, editedDescription, editedIsActive);
+    sendPutRequest(id, editedTitle, editedDescription, editedIsActive , ExternalId);
 
     setIsEditable(false);
   };
@@ -32,7 +32,8 @@ function TaskCard({ id, title, taskDescription, isActive, index }) {
     setEditedIsActive(isActive);
   };
   const handleDelete = () => {
-    sendDeleteRequest(id);
+    console.log(ExternalId);
+    sendDeleteRequest(ExternalId);
   };
   const sendDeleteRequest = async (id) => {
     try {
@@ -46,14 +47,15 @@ function TaskCard({ id, title, taskDescription, isActive, index }) {
   };
   const user = JSON.parse(localStorage.getItem("user"));
   // console.log(user);
-  const sendPutRequest = async (id, title, description, isActive) => {
+  const sendPutRequest = async (id, title, description, isActive, ExternalId) => {
     const dataToPost= {
-      id:id,
+
       title : title,
       description:description,
       isActive:isActive,
       createdAt: new Date(),
-      userId: user.id
+      userId: user.id,
+      ExternalId:ExternalId
     }
     console.log(dataToPost);
     try {

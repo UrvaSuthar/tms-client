@@ -1,10 +1,14 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
+
 
 function Header() {
   const navigate = useNavigate();
+  const { logout } = useAuth0();
 
   const handleLogout = () => {
+    logout();
     localStorage.removeItem("username");
     localStorage.removeItem("token");
     navigate("/");

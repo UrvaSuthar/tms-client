@@ -6,18 +6,20 @@ import Home from "./components/Home";
 import Task from "./components/Task";
 import Dashboard from "./components/Dashboard";
 import Authenticate from "./components/Authenticate";
-
+import PublicScreen from "./components/PublicScreen";
 
 function App() {
   // localStorage.setItem("isUpdated",false);
   return (
     <BrowserRouter>
       <Routes>
-        <Route element={<Authenticate />}>
-          <Route path="/home" element={<Home />} />
-          <Route path="/task" element={<Task />} />
-        </Route>
-        <Route path="/" element={<Login />} />
+        <Route path="/" element={<PublicScreen />} />
+        <Route path="/public" element={<PublicScreen />} />
+        {/* <Route element={<Authenticate />}> */}
+        <Route path="/home" element={<Home />} />
+        <Route path="/task" element={<Task />} />
+        {/* </Route> */}
+        <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/dashboard" element={<Dashboard />} />
       </Routes>

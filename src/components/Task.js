@@ -65,7 +65,7 @@ function Task() {
   return (
     <div className="flex font-mono dark:text-gray-200">
       <Header />
-      <div className="flex-grow bg-dotted-spacing-9 bg-dotted-gray-400 dark:bg-dark dark:bg-dotted-gray-600 px-3 py-3">
+      <div className="flex-grow max-h-screen overflow-y-scroll bg-dotted-spacing-9 bg-dotted-gray-400 dark:bg-dark dark:bg-dotted-gray-600 px-3 py-3">
         <h1 className="text-6xl my-5 text-gray-700 dark:text-gray-200">
           Tasks
         </h1>
@@ -127,10 +127,11 @@ function Task() {
             <TaskCard
               key={index}
               index={index + 1}
-              id={task.id}
+              id={task.externalId}
               title={task.title}
               taskDescription={task.description}
               isActive={task.isActive}
+              ExternalId={task.externalId}
             />
           ))}
         </div>
