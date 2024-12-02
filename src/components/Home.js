@@ -123,6 +123,7 @@ function Home() {
 
             <p className="text-xl">{quoteObj?.content}</p>
             <p className="text-lg">- {quoteObj?.author}</p>
+            <p className="text-lg">Made With ❤️ By Urva</p>
           </div>
         </div>
       </div>
