@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import Header from "./Header";
 import axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
+import { jwtDecode } from "jwt-decode";
+// import jwtDecode from "jwt-decode";
 
 function Home() {
   const [greeting, setGreeting] = useState("");
@@ -10,27 +12,48 @@ function Home() {
 
   const { user, getAccessTokenSilently } = useAuth0();
   try {
-    if (user ){
-    const getAccessToken = async () => {
-      let status = "pending";
-      let accessToken;
+    if (user) {
 
-      while (status === "pending") {
-        try {
-          accessToken = await getAccessTokenSilently();
-          status = "success";
-        } catch (error) {
-          console.log(error);
-          status = "pending";
+      const getAccessToken = async () => {
+        let status = "pending";
+        let accessToken;
+
+        while (status === "pending") {
+          try {
+            accessToken = await getAccessTokenSilently();
+            status = "success";
+          } catch (error) {
+            console.log(error);
+            status = "pending";
+          }
         }
-      }
 
-      console.log(accessToken);
-      localStorage.setItem("token", accessToken);
-    };
+        console.log(accessToken);
+        localStorage.setItem("accessToken", accessToken);
 
-    getAccessToken();
-  }
+        // Decode the token
+        const decodedToken = jwtDecode(accessToken);
+        console.log(decodedToken);
+
+        // Make signup request
+        const signupData = {
+          username: user.nickname,
+          email: user.email,
+          userId : decodedToken.sub
+          // Add any other required signup data
+        };
+        console.log(signupData);
+
+        try {
+          const response = await axios.post("http://localhost:5239/api/auth/signup", signupData).then(res=>localStorage.setItem("token",res.data.token)).catch(err=>console.error(err))
+          console.log(response.status);
+        } catch (error) {
+          console.error(error);
+        }
+      };
+
+      getAccessToken();
+    }
   } catch (error) {
     console.log(error);
   }
@@ -70,12 +93,11 @@ function Home() {
       getCurrentTime();
     }, 1000 * 60); // Update time every minute
 
-    
     return () => {
       clearInterval(intervalId);
     };
   }, []);
-  
+
   useEffect(() => {
     const getQuote = async () => {
       try {
@@ -86,9 +108,7 @@ function Home() {
       }
     };
     getQuote();
-
-  },[])
-  
+  }, []);
 
   return (
     <div className="flex font-mono dark:text-gray-200">
@@ -96,14 +116,14 @@ function Home() {
       <div className="flex-grow bg-dotted-spacing-9 bg-dotted-gray-400 dark:bg-dotted-gray-600 dark:bg-dark">
         <div className="flex justify-start items-end h-screen p-2">
           <div className="flex-col space-y-2 mb-4 ml-4">
-            <h1 className="text-2xl font-medium">{greeting} {localStorage.getItem('username') || user?.name }</h1>
+            <h1 className="text-2xl font-medium">
+              {greeting} {localStorage.getItem("username") || user?.name}
+            </h1>
             <p className="text-5xl font-semibold">{currentTime}</p>
 
-              <p className="text-xl">
-                {quoteObj?.content}
-              </p>
-              <p className="text-lg">- {quoteObj?.author}</p>
-
+            <p className="text-xl">{quoteObj?.content}</p>
+            <p className="text-lg">- {quoteObj?.author}</p>
+            <p className="text-lg">Made With ❤️ By Urva</p>
           </div>
         </div>
       </div>

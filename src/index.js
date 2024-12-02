@@ -6,8 +6,8 @@ import reportWebVitals from "./reportWebVitals";
 import { TaskProvider } from "./hooks/TaskContext"; // Import the TaskProvider
 import { Auth0Provider } from "@auth0/auth0-react";
 
-const domain = "dev-2hc8zkomnmxgfd4g.us.auth0.com";
-const clientId = "pte7iB3nkN3hBRIoMCoWRk6OUBmSi0nU";
+const domain = process.env.domain;
+const clientId = process.env.clientId;
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -17,7 +17,10 @@ root.render(
       clientId={clientId}
       authorizationParams={{
         redirect_uri: "http://localhost:3000/home",
-      }}
+        audience:"http://localhost:5239/"
+      }
+    }
+
     >
       <TaskProvider>
         <App />

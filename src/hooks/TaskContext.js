@@ -40,7 +40,7 @@ export const TaskProvider = ({ children }) => {
   useEffect(() => {
     updateTasks();
 
-  });
+  },[]);
 
   return (
     <TaskContext.Provider value={{ tasks, isAdmin, users, updateTasks }}>

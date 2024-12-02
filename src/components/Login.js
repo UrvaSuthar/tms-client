@@ -46,7 +46,7 @@ const Login = () => {
       });
       const token = response.data.token;
       const user = response.data.user;
-      console.log(user);
+
 
       if (localStorage.getItem("token") != null) {
         localStorage.removeItem("token");
